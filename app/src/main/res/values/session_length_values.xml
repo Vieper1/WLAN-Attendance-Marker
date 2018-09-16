@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="session_length_values_list">
+        <item>30000</item>
+        <item>1200000</item>
+        <item>2100000</item>
+        <item>3000000</item>
+        <item>3900000</item>
+        <item>4800000</item>
+        <item>6600000</item>
+    </string-array>
+</resources>

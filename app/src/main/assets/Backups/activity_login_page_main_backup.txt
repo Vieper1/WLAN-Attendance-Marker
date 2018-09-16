@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login_page_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.kvm.automaticattendancemarker.LoginPageMain">
+
+
+    <!-- 1 -->
+    <TextView
+        android:id="@+id/main_page_lbl_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_main_page_header"
+        android:textSize="30sp"
+        android:textColor="@android:color/white"
+        android:textAlignment="center"
+
+        android:layout_gravity="center_horizontal"/>
+
+
+
+
+
+    <!-- ////////// Professor Login ////////////////////////////// -->
+    <LinearLayout
+
+
+
+        android:id="@+id/main_page_layout_professor_login"
+
+
+
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+
+
+
+
+        android:visibility="gone">
+
+
+
+
+
+        <!-- 2 -->
+        <TextView
+            android:id="@+id/main_page_prof_view_lbl_login_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_prof_login"
+            android:textSize="30sp"
+            android:textColor="@android:color/white"
+
+            android:layout_marginStart="18dp"
+            android:layout_marginBottom="10dp"/>
+
+
+        <EditText
+            android:id="@+id/main_page_prof_view_prof_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_for_transparent_clickable_views"
+            android:hint="@string/lbl_prof_email"
+            android:inputType="textEmailAddress"
+            android:textSize="22sp"
+
+            android:textColor="@color/VieperDeepLightGreen"
+
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp"
+
+            android:textColorHint="#d6d6d6"/>
+
+
+        <EditText
+            android:id="@+id/main_page_prof_view_prof_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_for_transparent_clickable_views"
+            android:hint="@string/lbl_prof_password"
+            android:inputType="textPassword"
+            android:textSize="22sp"
+
+            android:textColor="@color/VieperDeepLightGreen"
+
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+
+            android:textColorHint="#d6d6d6"/>
+
+
+        <!-- 3 -->
+        <CheckBox
+
+            android:id="@+id/main_page_prof_view_chk_signed_in"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_prof_keep_me_signed"
+            android:textSize="22sp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"/>
+
+
+        <!-- 4 -->
+        <!-- Navigation 1 -->
+        <TextView
+            android:id="@+id/main_page_prof_view_link_create_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_prof_create_account"
+            android:textSize="26sp"
+            android:textColor="@color/VieperLightestGreen"
+
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp" />
+
+        <!-- Navigation 2 -->
+        <android.support.design.widget.FloatingActionButton
+
+
+            android:id="@+id/main_page_prof_view_fab_sign_in"
+
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:fabSize="normal"
+            style="@style/Theme.AppCompat"
+            app:srcCompat="@mipmap/ic_chevron_right_black_48dp"
+            android:src="@mipmap/ic_chevron_right_black_48dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginTop="20dp"
+
+
+
+            android:visibility="visible"/>
+
+
+
+
+    </LinearLayout>
+
+    <!-- ////////// Professor Login ////////////////////////////// -->
+
+
+
+
+
+
+
+
+
+    <!-- ////////// Student Login ////////////////////////////// -->
+    <LinearLayout
+
+
+
+        android:id="@+id/main_page_layout_student_mode"
+
+
+
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <!-- ////////// No Account //////////////////// -->
+            <LinearLayout
+
+                android:id="@+id/main_page_layout_student_mode_no_account"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginBottom="40dp"
+
+
+
+                android:visibility="gone">
+
+
+
+                <!-- 5 -->
+                <TextView
+
+                    android:id="@+id/main_page_student_view_lbl_no_account"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_stu_no_account"
+                    android:textColor="@android:color/white"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    android:layout_marginTop="10dp"/>
+
+                <!-- 6 -->
+                <!-- Navigation 3 -->
+                <Button
+
+                    android:id="@+id/main_page_student_view_btn_create_account"
+
+                    android:layout_width="260dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/background_for_transparent_clickable_views"
+                    android:text="@string/lbl_stu_create_account"
+                    android:textColor="@color/VieperDeepGreen"
+                    android:textSize="18sp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="10dp"/>
+
+            </LinearLayout>
+            <!-- ////////// No Account //////////////////// -->
+
+
+
+
+
+            <!-- ////////// Account Found //////////////////// -->
+            <LinearLayout
+
+                android:id="@+id/main_page_layout_student_mode_account_details"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="70dp"
+
+
+
+
+                android:visibility="gone">
+
+
+                <!-- 7 -->
+                <TextView
+                    android:id="@+id/main_page_student_view_lbl_user_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_stu_user_details"
+                    android:textSize="24sp"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="18dp"/>
+
+
+                <ListView
+
+                    android:id="@+id/main_page_student_view_lv_account_details"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:background="@drawable/background_for_transparent_activity"
+                    android:backgroundTint="@color/VieperDeepLightGreen"
+
+                    android:scrollbars="none"/>
+
+            </LinearLayout>
+            <!-- ////////// Account Found //////////////////// -->
+
+
+            <!-- ////////// Verification In Progress //////////////////// -->
+            <LinearLayout
+
+                android:id="@+id/main_page_layout_student_mode_verifying"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginBottom="40dp"
+
+
+
+                android:visibility="visible">
+
+
+
+                <!-- 8 -->
+                <TextView
+
+                    android:id="@+id/main_page_student_view_lbl_verifying"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_stu_verifying"
+                    android:textColor="@android:color/white"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    android:layout_marginTop="10dp"/>
+
+                <!-- 8.1 -->
+                <Button
+
+                    android:id="@+id/main_page_student_view_btn_edit_email"
+
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/background_for_transparent_clickable_views"
+                    android:text="@string/lbl_stu_edit_email_id"
+                    android:textColor="@color/VieperDeepGreen"
+                    android:textSize="18sp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="20dp"/>
+
+                <!-- Navigation 4 -->
+                <android.support.design.widget.FloatingActionButton
+
+
+                    android:id="@+id/main_page_student_view_fab_verified"
+
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    app:fabSize="normal"
+                    style="@style/Theme.AppCompat"
+
+                    app:srcCompat="@mipmap/ic_chevron_right_black_48dp"
+                    android:src="@mipmap/ic_chevron_right_black_48dp"
+                    android:layout_gravity="center|bottom"
+                    android:layout_marginTop="20dp"
+
+
+
+                    android:visibility="visible"/>
+
+
+            </LinearLayout>
+            <!-- ////////// Verification In Progress //////////////////// -->
+        </FrameLayout>
+    </LinearLayout>
+    <!-- ////////// Student Login ////////////////////////////// -->
+
+
+
+
+
+
+
+
+
+
+    <!-- ////////// Mode Switcher ////////////////////////////// -->
+    <!--
+    <LinearLayout
+
+
+        android:id="@+id/main_page_layout_mode_switcher"
+
+
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:background="@drawable/background_for_transparent_clickable_views"
+        android:layout_gravity="center_horizontal|bottom"
+        android:translationZ="10dp">
+
+-->
+        <!-- 0 -->
+    <!--
+        <TextView
+            android:id="@+id/main_page_layout_mode_switcher_lbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/switcher_to_prof_mode"
+            android:textColor="@android:color/black"
+            android:textAlignment="center"
+
+
+            android:textSize="24sp"
+
+
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+
+            android:paddingLeft="25dp"
+            android:paddingRight="10dp"/>
+
+
+        <ImageView
+            android:id="@+id/main_page_layout_mode_switcher_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/ic_assignment_ind_black_48dp"
+
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+
+            android:paddingRight="25dp"/>
+
+    </LinearLayout>
+-->
+    <!-- ////////// Mode Switcher ////////////////////////////// -->
+
+</FrameLayout>

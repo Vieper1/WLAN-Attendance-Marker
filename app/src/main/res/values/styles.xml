@@ -1,0 +1,49 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+
+
+
+
+    <style name="VieperDark" parent="Theme.AppCompat" >
+        <item name="android:colorBackground">@color/background_material_dark</item>
+        <item name="android:navigationBarColor">@color/VieperDeepestGreen</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="color">@color/VieperDeepLightGreen</item>
+        <item name="colorAccent">#e0e0e0</item>
+    </style>
+
+
+
+    <style name="VieperDark.ActionBar" parent="Theme.AppCompat" >
+        <item name="android:colorBackground">@color/background_material_dark</item>
+        <item name="android:navigationBarColor">@color/VieperDeepestGreen</item>
+        <item name="android:statusBarColor">@color/VieperDeepLightGreen</item>
+        <item name="colorPrimaryDark">@color/VieperDeepLightGreen</item>
+    </style>
+
+
+
+
+
+
+    <style name="Theme.Transparent" parent="VieperDark">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="Theme.Material.Light.NoActionBar.NoActionBar" parent="android:Theme.Material.NoActionBar" />
+
+</resources>

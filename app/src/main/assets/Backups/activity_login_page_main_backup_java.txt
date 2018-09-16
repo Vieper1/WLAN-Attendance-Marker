@@ -1,0 +1,602 @@
+package com.kvm.automaticattendancemarker;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextClock;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
+
+public class LoginPageMain extends AppCompatActivity
+{
+    //////////////////////////////////////////////////////////////////////////////// Student Account State
+    private int stateAccountDetected = 0;
+    // 2 - Account Found
+    // 1 - Verifying
+    // 0 - No Account
+
+    //////////////////////////////////////////////////////////////////////////////// Student Account State
+
+
+    //////////////////////////////////////////////////////////////////////////////// Switcher
+    LinearLayout buttonSwitcher;
+    //////////////////////////////////////////////////////////////////////////////// Switcher
+
+
+
+    //////////////////////////////////////////////////////////////////////////////// Navigation
+    TextView prof_view_create_account_link;
+    FloatingActionButton prof_view_login_link;
+
+    Button stu_view_create_account_link;
+    FloatingActionButton stu_view_verification_done_link;
+
+    Button stu_view_edit_email_link;
+    //////////////////////////////////////////////////////////////////////////////// Navigation
+
+
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login_page_main);
+
+        toAgencyFB();
+
+
+
+
+
+        ////////////////////////////// Assign Objects to Navigators
+        prof_view_create_account_link = (TextView) findViewById(R.id.main_page_prof_view_link_create_account);
+        prof_view_login_link = (FloatingActionButton) findViewById(R.id.main_page_prof_view_fab_sign_in);
+
+        stu_view_create_account_link = (Button) findViewById(R.id.main_page_student_view_btn_create_account);
+        stu_view_verification_done_link = (FloatingActionButton) findViewById(R.id.main_page_student_view_fab_verified);
+
+        stu_view_edit_email_link = (Button) findViewById(R.id.main_page_student_view_btn_edit_email);
+        ////////////////////////////// Assign Objects to Navigators
+
+
+
+
+        ////////////////////////////// Set listeners
+        prof_view_create_account_link.setOnClickListener(onNavigatorClick);
+        prof_view_login_link.setOnClickListener(onNavigatorClick);
+
+        stu_view_create_account_link.setOnClickListener(onNavigatorClick);
+        stu_view_verification_done_link.setOnClickListener(onNavigatorClick);
+
+        stu_view_edit_email_link.setOnClickListener(onNavigatorClick);
+        ////////////////////////////// Set listeners
+
+
+
+
+
+
+
+
+
+
+
+
+        ////////////////////////////// Set SWTICHER listener
+        buttonSwitcher = (LinearLayout) findViewById(R.id.main_page_layout_mode_switcher);
+        buttonSwitcher.setOnClickListener(onSwitcherClick);
+        ////////////////////////////// Set SWTICHER listener
+
+
+
+
+
+
+
+
+
+
+
+        ////////////////////////////// Try Google Sync and set State
+        stateAccountDetected = syncGoogle();
+        ////////////////////////////// Try Google Sync and set State
+        ////////////////////////////// Use Student Account State
+        String stuSharedPrefName = getResources().getString(R.string.shared_pref_student_profile_name);
+        String stuSharedPrefAccLevel = getResources().getString(R.string.shared_pref_student_profile_stu_account_level);
+
+        SharedPreferences stuSharedPref = getSharedPreferences(stuSharedPrefName, Context.MODE_PRIVATE);
+        stateAccountDetected = stuSharedPref.getInt(stuSharedPrefAccLevel, -1);
+
+        if(stateAccountDetected == -1)
+        {
+            stateAccountDetected = 0;
+        }
+        ////////////////////////////// Use Student Account State
+        showStudentView();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        ////////////////////////////// Remember Me
+        CheckBox doYouRememberMe = (CheckBox) findViewById(R.id.main_page_prof_view_chk_signed_in);
+        doYouRememberMe.setOnClickListener(onRememberMeClickListener);
+        profRememberMe();
+        ////////////////////////////// Remember Me
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////// Click Handlers
+    ////////////////////////////////////////////////////////////////////// Switcher
+    public View.OnClickListener onSwitcherClick = new View.OnClickListener()
+    {
+
+
+        private String SWITCH_TO_PROF;
+        private String SWITCH_TO_STU;
+
+        private ImageView imgSwitcher;
+        private TextView lblSwitcher;
+
+        private LinearLayout layoutProfLogin;
+        private LinearLayout layoutStuLogin;
+
+
+
+        @Override
+        public void onClick(View v)
+        {
+            SWITCH_TO_PROF = getApplicationContext().getResources().getString(R.string.switcher_to_prof_mode);
+            SWITCH_TO_STU = getApplicationContext().getResources().getString(R.string.switcher_to_stu_mode);
+
+            imgSwitcher = (ImageView) findViewById(R.id.main_page_layout_mode_switcher_img);
+            lblSwitcher = (TextView) findViewById(R.id.main_page_layout_mode_switcher_lbl);
+
+            layoutProfLogin = (LinearLayout) findViewById(R.id.main_page_layout_professor_login);
+            layoutStuLogin = (LinearLayout) findViewById(R.id.main_page_layout_student_mode);
+
+
+
+            if(v.getId() == R.id.main_page_layout_mode_switcher)
+            {
+                if(lblSwitcher.getText().equals(SWITCH_TO_PROF))
+                {
+                    ////////////////////////////// Switch to Professor Mode
+                    lblSwitcher.setText(SWITCH_TO_STU);
+                    imgSwitcher.setImageResource(R.mipmap.ic_account_circle_black_48dp);
+                    showHideProfCreateAccountLink();
+
+                    ////////////////////////////// Animation
+                    layoutProfLogin.setVisibility(View.VISIBLE);
+                    hideStudentView();
+
+
+
+                }
+                else if(lblSwitcher.getText().equals(SWITCH_TO_STU))
+                {
+                    ////////////////////////////// Switch to Student Mode
+                    lblSwitcher.setText(SWITCH_TO_PROF);
+                    imgSwitcher.setImageResource(R.mipmap.ic_assignment_ind_black_48dp);
+
+                    ////////////////////////////// Animation
+                    layoutProfLogin.setVisibility(View.GONE);
+                    showStudentView();
+
+
+                }
+            }
+        }
+    };
+    ////////////////////////////////////////////////////////////////////// Switcher
+
+    ////////////////////////////////////////////////////////////////////// Various
+    public View.OnClickListener onNavigatorClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            Intent navigatorIntent;
+
+            if(v.getId() == R.id.main_page_prof_view_link_create_account)
+            {
+                navigatorIntent = new Intent(LoginPageMain.this, ProfessorCreateAccount.class);
+                navigatorIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getApplicationContext().startActivity(navigatorIntent);
+            }
+
+
+
+
+
+
+
+            if(v.getId() == R.id.main_page_prof_view_fab_sign_in)
+            {
+                boolean clearToNavigate = false;
+
+                EditText username = (EditText) findViewById(R.id.main_page_prof_view_prof_id);
+                EditText password = (EditText) findViewById(R.id.main_page_prof_view_prof_password);
+
+                String sharedPrefName = getResources().getString(R.string.shared_pref_professor_profile_name);
+                String sharedPrefUsername = getResources().getString(R.string.shared_pref_professor_profile_username);
+                String sharedPrefPassword = getResources().getString(R.string.shared_pref_professor_profile_password);
+                String sharedPrefUsable = getResources().getString(R.string.shared_pref_professor_profile_usable);
+
+                SharedPreferences profileInfo = getSharedPreferences(sharedPrefName, MODE_PRIVATE);
+
+                String usernameFromPref = profileInfo.getString(sharedPrefUsername, null);
+                String passwordFromPref = profileInfo.getString(sharedPrefPassword, null);
+                String usernameOnPage = username.getText().toString();
+                String passwordOnPage = password.getText().toString();
+
+                ////////////////////////////// Validation
+                if(usernameOnPage.equals(""))
+                {
+                    quickToaster("LOGIN INFO MISSING!");
+                    clearToNavigate = false;
+                    return;
+                }
+                else if(usernameOnPage.equals(""))
+                {
+                    quickToaster("LOGIN INFO MISSING!");
+                    clearToNavigate = false;
+                    return;
+                }
+                else if((usernameOnPage.equals(usernameFromPref)) && (passwordOnPage.equals(passwordFromPref)))
+                {
+                    clearToNavigate = true;
+                }
+                ////////////////////////////// Validation
+
+
+
+                if(clearToNavigate)
+                {
+                    navigatorIntent = new Intent(LoginPageMain.this, ProfessorMenu.class);
+                    navigatorIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getApplicationContext().startActivity(navigatorIntent);
+                }
+                else
+                {
+                    quickToaster("INVALID LOGIN CREDENTIALS!");
+                    return;
+                }
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+            if(v.getId() == R.id.main_page_student_view_fab_verified)
+            {
+                navigatorIntent = new Intent(LoginPageMain.this, StudentCreateAccount2.class);
+                navigatorIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getApplicationContext().startActivity(navigatorIntent);
+            }
+
+            if(v.getId() == R.id.main_page_student_view_btn_create_account)
+            {
+                navigatorIntent = new Intent(LoginPageMain.this, StudentCreateAccount.class);
+                navigatorIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getApplicationContext().startActivity(navigatorIntent);
+            }
+
+
+
+
+
+
+
+
+            if(v.getId() == R.id.main_page_student_view_btn_edit_email)
+            {
+                navigatorIntent = new Intent(LoginPageMain.this, StudentCreateAccount.class);
+                navigatorIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getApplicationContext().startActivity(navigatorIntent);
+            }
+        }
+    };
+    ////////////////////////////////////////////////////////////////////// Various
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void profRememberMe()
+    {
+        CheckBox doYouRememberMe = (CheckBox) findViewById(R.id.main_page_prof_view_chk_signed_in);
+        EditText txt_username = (EditText) findViewById(R.id.main_page_prof_view_prof_id);
+        EditText txt_password = (EditText) findViewById(R.id.main_page_prof_view_prof_password);
+
+        String sharedPrefName = getResources().getString(R.string.shared_pref_professor_profile_name);
+        String sharedPrefUsername = getResources().getString(R.string.shared_pref_professor_profile_username);
+        String sharedPrefPassword = getResources().getString(R.string.shared_pref_professor_profile_password);
+        String sharedPrefUsable = getResources().getString(R.string.shared_pref_professor_profile_usable);
+        String sharedPrefRememberMe = getResources().getString(R.string.shared_pref_professor_profile_remember_me);
+
+        SharedPreferences profileInfo = getSharedPreferences(sharedPrefName, MODE_PRIVATE);
+
+        if(profileInfo.getBoolean(sharedPrefRememberMe, false))
+        {
+            doYouRememberMe.setChecked(true);
+        }
+        else
+        {
+            doYouRememberMe.setChecked(false);
+        }
+
+        if(doYouRememberMe.isChecked() && profileInfo.getString(sharedPrefUsable, "NO").equals("YES"))
+        {
+            txt_username.setText(profileInfo.getString(sharedPrefUsername, null));
+            txt_password.setText(profileInfo.getString(sharedPrefPassword, null));
+        }
+        else
+        {
+            txt_username.setText("");
+            txt_password.setText("");
+        }
+    }
+    public void showStudentView()
+    {
+        LinearLayout layoutStudentAccountDetails = (LinearLayout) findViewById(R.id.main_page_layout_student_mode_account_details);
+        LinearLayout layoutStudentAccountNotFound = (LinearLayout) findViewById(R.id.main_page_layout_student_mode_no_account);
+        LinearLayout layoutStudentAccountVerifying = (LinearLayout) findViewById(R.id.main_page_layout_student_mode_verifying);
+
+        if(stateAccountDetected == 2)
+        {
+            layoutStudentAccountDetails.setVisibility(View.VISIBLE);
+            layoutStudentAccountVerifying.setVisibility(View.GONE);
+            layoutStudentAccountNotFound.setVisibility(View.GONE);
+        }
+        else if(stateAccountDetected == 1)
+        {
+            layoutStudentAccountDetails.setVisibility(View.GONE);
+            layoutStudentAccountVerifying.setVisibility(View.VISIBLE);
+            layoutStudentAccountNotFound.setVisibility(View.GONE);
+        }
+        else if(stateAccountDetected == 0)
+        {
+            layoutStudentAccountDetails.setVisibility(View.GONE);
+            layoutStudentAccountVerifying.setVisibility(View.GONE);
+            layoutStudentAccountNotFound.setVisibility(View.VISIBLE);
+        }
+
+        // 2 - Account Found
+        // 1 - Verifying
+        // 0 - No Account
+    }
+    public void hideStudentView()
+    {
+        LinearLayout layoutStudentAccountDetails = (LinearLayout) findViewById(R.id.main_page_layout_student_mode_account_details);
+        LinearLayout layoutStudentAccountNotFound = (LinearLayout) findViewById(R.id.main_page_layout_student_mode_no_account);
+        LinearLayout layoutStudentAccountVerifying = (LinearLayout) findViewById(R.id.main_page_layout_student_mode_verifying);
+
+        layoutStudentAccountDetails.setVisibility(View.GONE);
+        layoutStudentAccountNotFound.setVisibility(View.GONE);
+        layoutStudentAccountVerifying.setVisibility(View.GONE);
+    }
+
+    private View.OnClickListener onRememberMeClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            CheckBox doYouRememberMe = (CheckBox) v;
+
+            String sharedPrefName = getResources().getString(R.string.shared_pref_professor_profile_name);
+            String sharedPrefRememberMe = getResources().getString(R.string.shared_pref_professor_profile_remember_me);
+            SharedPreferences profileInfo = getSharedPreferences(sharedPrefName, MODE_PRIVATE);
+            SharedPreferences.Editor profileEditor = profileInfo.edit();
+
+            if(doYouRememberMe.isChecked())
+            {
+                profileEditor.putBoolean(sharedPrefRememberMe, true);
+            }
+            else
+            {
+                profileEditor.putBoolean(sharedPrefRememberMe, false);
+            }
+
+            profileEditor.apply();
+        }
+    };
+    //////////////////////////////////////////////////////////////////////////////// Click Handlers
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////// Google Sync
+    public int syncGoogle()
+    {
+        ////////////////////////////// .....
+
+        return 0;
+    }
+    //////////////////////////////////////////////////////////////////////////////// Google Sync
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public void onBackPressed()
+    {
+        finish();
+    }
+
+    public void showHideProfCreateAccountLink()
+    {
+        TextView linkText = (TextView) findViewById(R.id.main_page_prof_view_link_create_account);
+
+        String sharedPrefName = getResources().getString(R.string.shared_pref_professor_profile_name);
+        String sharedPrefUsable = getResources().getString(R.string.shared_pref_professor_profile_usable);
+
+        SharedPreferences profileInfo = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE);
+        if(profileInfo.getString(sharedPrefUsable, null) == null)
+        {
+            linkText.setVisibility(View.VISIBLE);
+            linkText.setClickable(true);
+            return;
+        }
+        if(profileInfo.getString(sharedPrefUsable, null).equals("YES"))
+        {
+            linkText.setVisibility(View.INVISIBLE);
+            linkText.setClickable(false);
+        }
+        else
+        {
+            linkText.setVisibility(View.VISIBLE);
+            linkText.setClickable(true);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void toAgencyFB()
+    {
+        TextView lblSwitcher = (TextView) findViewById(R.id.main_page_layout_mode_switcher_lbl);
+        TextView lbl1 = (TextView) findViewById(R.id.main_page_lbl_header);
+        TextView lbl2 = (TextView) findViewById(R.id.main_page_prof_view_lbl_login_details);
+        TextView lbl3 = (TextView) findViewById(R.id.main_page_prof_view_chk_signed_in);
+        TextView lbl4 = (TextView) findViewById(R.id.main_page_prof_view_link_create_account);
+        TextView lbl5 = (TextView) findViewById(R.id.main_page_student_view_lbl_no_account);
+        TextView lbl6 = (TextView) findViewById(R.id.main_page_student_view_btn_create_account);
+        TextView lbl7 = (TextView) findViewById(R.id.main_page_student_view_lbl_user_details);
+        TextView lbl8 = (TextView) findViewById(R.id.main_page_student_view_lbl_verifying);
+        TextView lbl8_1 = (TextView) findViewById(R.id.main_page_student_view_btn_edit_email);
+
+        Typeface agencyfb = Typeface.createFromAsset(getAssets(), "agency_fb.ttf");
+        lblSwitcher.setTypeface(agencyfb);
+        lbl1.setTypeface(agencyfb);
+        lbl2.setTypeface(agencyfb);
+        lbl3.setTypeface(agencyfb);
+        lbl4.setTypeface(agencyfb);
+        lbl5.setTypeface(agencyfb);
+        lbl6.setTypeface(agencyfb);
+        lbl7.setTypeface(agencyfb);
+        lbl8.setTypeface(agencyfb);
+        lbl8_1.setTypeface(agencyfb);
+
+        lblSwitcher = null;
+        lbl1 = null;
+        lbl2 = null;
+        lbl3 = null;
+        lbl4 = null;
+        lbl5 = null;
+        lbl6 = null;
+        lbl7 = null;
+        lbl8 = null;
+        lbl8_1 = null;
+    }
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////// Can Be Used
+    private void quickAlertMessage(String title, String message)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    private void quickToaster(String message)
+    {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+    //////////////////////////////////////////////////////////////////////////////// Can Be Used
+}

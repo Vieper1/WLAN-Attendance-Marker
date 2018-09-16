@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kvm.automaticattendancemarker">
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_content_paste_white_48dp"
+        android:label="Automatic Attendance Marker"
+        android:supportsRtl="true"
+        android:theme="@style/VieperDark">
+        <service
+            android:name=".vipers.services.MarkerPrimaryIntentService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <service
+            android:name=".vipers.services.MarkerService"
+            android:label="Attendance Service"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver
+            android:name=".vipers.receivers.OnTimerFinishReceiver"
+            android:enabled="true" />
+
+        <activity
+            android:name=".Splasher"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ProfessorMenu"
+            android:label="Menu"
+            android:noHistory="true" />
+        <activity
+            android:name=".ProfessorSystemMenu"
+            android:noHistory="true" />
+        <activity
+            android:name=".AttendanceModeStudent"
+            android:noHistory="true" />
+        <activity
+            android:name=".ProfessorCreateSystem"
+            android:noHistory="true" />
+        <activity
+            android:name=".ProfessorCreateSystem2"
+            android:noHistory="true" />
+        <activity
+            android:name=".ProfessorCreateSystem3"
+            android:noHistory="true" />
+
+        <provider
+            android:name=".utilities.dbrel.AttendanceSystemContentProvider"
+            android:authorities="com.kvm.automaticattendancemarker.provider"
+            android:enabled="true"
+            android:exported="false" />
+
+        <activity
+            android:name=".ProfessorCreateSystem4"
+            android:noHistory="true" />
+        <activity
+            android:name=".ProfessorSystemSubjectMenu"
+            android:noHistory="true" />
+        <activity android:name=".AttendanceModeProfessor" />
+        <activity android:name=".AttendanceModeAddStudents" />
+        <activity android:name=".LoginPageChooseProfile"
+            android:noHistory="true"/>
+        <activity
+            android:label="Settings"
+            android:noHistory="true"
+            android:name=".activities.settings.SettingsActivityPrimary" />
+        <activity
+            android:label="Settings"
+            android:noHistory="true"
+            android:name=".activities.settings.SettingsActivitySecond" />
+        <activity
+            android:name=".activities.google.GoogleSignInMandatory"
+            android:label="@string/title_activity_google_sign_in_mandatory" />
+        <activity
+            android:label="Attendance"
+            android:name=".activities.result.AttendanceResult" />
+        <activity
+            android:label="Logs"
+            android:name=".activities.result.AttendanceLogList" />
+        <activity android:name=".activities.under_new_management.ManagerMenu" />
+        <activity android:name=".activities.navigator.ClassToNav" />
+        <activity
+            android:name=".activities.ManageClass"
+            android:label="Manage Class" />
+        <activity android:name=".activities.result.StudentInfo"
+            android:label="Student details" />
+    </application>
+
+</manifest>

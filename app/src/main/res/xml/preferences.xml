@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:key="pref_polling_rate"
+        android:title="Polling Interval"
+        android:summary="A shorter polling interval will consume more power"
+        android:entries="@array/pref_interval_list"
+        android:entryValues="@array/pref_interval_list_values"
+        android:defaultValue="2000"
+        android:icon="@drawable/ic_refresh_white_48px" />
+
+    <ListPreference
+        android:key="pref_leniency_percentage"
+        android:title="Leniency"
+        android:summary="Allowable ratio of time for attendance"
+        android:entries="@array/leniency_percentage_list"
+        android:entryValues="@array/leniency_percentage_values_list"
+        android:defaultValue="50"
+        android:icon="@drawable/ic_sentiment_satisfied_white_48px" />
+
+    <ListPreference
+        android:key="pref_lecture_length"
+        android:title="Lecture Length"
+        android:summary="Set the lecture length in time"
+        android:entries="@array/session_length_list"
+        android:entryValues="@array/session_length_values_list"
+        android:defaultValue="30000"
+        android:icon="@drawable/ic_timelapse_white_48px" />
+
+    <ListPreference
+        android:key="pref_practical_length"
+        android:title="Practical Length"
+        android:summary="Set the practical length in time"
+        android:entries="@array/session_length_list"
+        android:entryValues="@array/session_length_values_list"
+        android:defaultValue="7200000"
+        android:icon="@drawable/ic_timelapse_white_48px" />
+
+</PreferenceScreen>

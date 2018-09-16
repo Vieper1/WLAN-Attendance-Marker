@@ -1,0 +1,242 @@
+<resources>
+    <string name="app_name">AutomaticAttendanceMarker</string>
+
+
+    <!--FOR LOGIC FILES-->
+
+
+
+
+    <!--            For SharedPreferences                                -->
+    <string name="shared_pref_student_profile_name">StudentProfileInfo</string>
+    <string name="shared_pref_student_profile_stu_unique_id">unique_id</string>
+    <string name="shared_pref_student_profile_stu_class_roll_no">roll_no</string>
+    <string name="shared_pref_student_profile_stu_email_id">email_id</string>
+    <string name="shared_pref_student_profile_stu_account_level">account_level</string>
+
+
+    <string name="shared_pref_professor_profile_name">ProfessorProfileInfo</string>
+    <string name="shared_pref_professor_profile_username">username</string>
+    <string name="shared_pref_professor_profile_temp_username">temp_username</string>
+    <string name="shared_pref_professor_profile_password">password</string>
+    <string name="shared_pref_professor_profile_usable">usable</string>
+    <string name="shared_pref_professor_profile_remember_me">rememberme</string>
+
+
+    <string name="shared_pref_app_pref">ApplicationPreferences</string>
+    <string name="shared_pref_app_pref_mode">appmode</string>
+
+
+    <string name="shared_pref_google_pref">GoogleData</string>
+    <string name="shared_pref_google_pref_id">id</string>
+    <string name="shared_pref_google_pref_displayname">displayname</string>
+    <string name="shared_pref_google_pref_email">email</string>
+    <string name="shared_pref_google_pref_photourl">photourl</string>
+
+
+    <!--For Database-->
+    <string name="studbase_table0_name">student_list</string>
+    <string name="studbase_table1_name">class_main</string>
+    <string name="studbase_table2_name">batch_main</string>
+    <string name="studbase_table3_name">class_attendance</string>
+    <string name="studbase_table4_name">practical_attendance</string>
+    <string name="studbase_table5_name">subject_list</string>
+
+    <string name="studbase_content_provider_uri">content://com.kvm.automaticattendancemarker.provider</string>
+
+
+    <!--FOR LOGIC FILES-->
+
+
+    <!--FOR XML FILES-->
+
+
+    <!--            For activity_splasher.xml                                -->
+    <string name="splash_application_name">Automatic Attendance\nMarker</string>
+    <string name="splash_tm">A Vieper Studios Production\n@2016</string>
+    <string name="splash_app_img_sub_content">AppImageSubContent</string>
+
+
+    <!--            For activity_professor_menu.xml                                -->
+    <string name="lbl_professor_details">PROFESSOR ROSTER</string>
+    <string name="lbl_collective">CHOOSE A SYSTEM</string>
+
+
+    <!--            For activity_professor_system_menu.xml                                -->
+    <string name="lbl_subsystem">CHOOSE A SUBSYSTEM</string>
+
+
+    <!--            For activity_professor_create_account2.xml                                -->
+    <string name="lbl_subsystem_subject">SUBJECT</string>
+
+
+    <!--            For activity_attendance_mode_student.xmlt.xml                                -->
+    <string name="lbl_attendance_activitiy_header">MARK YOUR ATTENDANCE</string>
+
+
+    <!--            For activity_professor_create_system.xml                                -->
+    <string name="lbl_professor_create_system_enter_year">CLASS</string>
+    <string name="lbl_professor_create_system_txt_fe">F. E.</string>
+    <string name="lbl_professor_create_system_txt_se">S. E.</string>
+    <string name="lbl_professor_create_system_txt_te">T. E.</string>
+    <string name="lbl_professor_create_system_txt_be">B. E.</string>
+    <string name="lbl_professor_create_system_txt_mca_fe">MCA F. E.</string>
+    <string name="lbl_professor_create_system_txt_mca_se">MCA S. E.</string>
+    <string name="lbl_professor_create_system_ok_btn">NEXT</string>
+
+
+    <!--            For activity_professor_create_system2.xml                                -->
+    <string name="lbl_professor_create_system2_branch">BRANCH</string>
+    <string name="lbl_professor_create_system2_ok_btn">NEXT</string>
+    <string name="lbl_professor_create_system2_edtxt_hint">eg. IT</string>
+
+
+    <!--            For activity_professor_create_system3.xml                                -->
+    <string name="lbl_professor_create_system3_subject">SUBJECT</string>
+    <string name="lbl_professor_create_system3_ok_btn">OK</string>
+    <string name="lbl_professor_create_system3_edtxt_hint">eg. BALLISTICS</string>
+
+
+    <!--            For activity_professor_create_system4.xml                                -->
+    <string name="lbl_professor_create_system4_batch_name">BATCH NAME</string>
+    <string name="lbl_professor_create_system4_ok_btn">OK</string>
+    <string name="lbl_professor_create_system4_edtxt_hint">eg. C</string>
+
+
+    <!--            For activity_attendance_mode_professor.xml                                -->
+    <string name="lbl_attendance_mode_header">ATTENDANCE MARKER</string>
+    <string name="lbl_attendance_mode_class_details">CLASS DETAILS</string>
+
+    <string name="lbl_attendance_mode_todays_list">TODAY\'S LIST</string>
+
+    <string name="lbl_attendance_mode_add_students">ADD</string>
+    <string name="lbl_attendance_mode_start_attendance">START</string>
+    <string name="lbl_attendance_mode_start_attendance_alternate">START ANOTHER ROUND</string>
+    <string name="lbl_attendance_mode_exceptions">EXEC</string>
+
+
+    <!--            For activity_attendance_mode_add_students.xml                                -->
+    <string name="lbl_attendance_mode_add_students_header">UNADDED STUDENTS</string>
+    <string name="lbl_attendance_mode_add_students_header_alert">(MAY CONTAIN STUDENTS NOT FROM YOUR CLASS)</string>
+    <string name="lbl_attendance_mode_add_students_header_no_networks">NETWORKS FOUND:</string>
+
+
+    <!--            For activity_login_page_choose_profile.xml                                -->
+    <string name="lbl_login_page_choose_student">STUDENT</string>
+    <string name="lbl_login_page_choose_professor">PROFESSOR</string>
+    <string name="lbl_login_page_choose_manager">MANAGER</string>
+    <string name="lbl_login_page_choose_header">CHOOSE PROFILE</string>
+
+    <string name="lbl_login_page_choose_retry_header">GOOGLE SIGN IN FAILED!</string>
+    <string name="lbl_login_page_choose_retry_sub">TRY AGAIN IN SOME TIME</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_settings_second">Settings</string>
+
+
+    <!--            For activity_google_sign_in_mandatory.xml                                -->
+    <string name="sign_in_mandatory_button_undertext">Sign in to continue</string>
+
+
+    <!--            For activity_class_to_nav.xml                                -->
+    <string name="class_to_nav_btn_attendance">NEW ATTENDANCE SESSION</string>
+    <string name="class_to_nav_btn_logs">ATTENDANCE LOGS</string>
+    <string name="class_to_nav_btn_manage">MANAGE</string>
+
+
+    <!--            For activity_manage_class.xml                                -->
+    <string name="manage_class_gridview_alternate">ADD STUDENTS TO VIEW DATA GRID</string>
+
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="title_activity_google_sign_in_mandatory">googleSignInMandatory</string>
+
+
+    <!--FOR XML FILES-->
+</resources>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

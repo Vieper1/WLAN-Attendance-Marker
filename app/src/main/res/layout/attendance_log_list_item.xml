@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/activity_horizontal_margin">
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="0.15">
+
+        <TextView
+            android:id="@+id/attendance_log_list_item_header"
+            android:textSize="24sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="11:18 AM"/>
+
+        <TextView
+            android:id="@+id/attendance_log_list_item_sub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="13 Feb 2017"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/attendance_log_list_item_side"
+        android:layout_weight="1.0"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:text="37"/>
+
+</LinearLayout>

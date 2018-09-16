@@ -1,0 +1,486 @@
+package com.kvm.automaticattendancemarker;
+
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.RectF;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
+import android.os.Environment;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextClock;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.Writer;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.kvm.automaticattendancemarker.wifimanager.WifiApManager;
+
+import org.w3c.dom.Text;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+public class LoginPageMain extends AppCompatActivity
+{
+    private boolean syncIsDialogCalled = false;
+
+    //////////////////////////////////////////////////////////////////////////////// Utils
+    private boolean savedWifiState = false;
+    //////////////////////////////////////////////////////////////////////////////// Utils
+
+
+
+    //////////////////////////////////////////////////////////////////////////////// Student Account State
+    private int stateAccountDetected = 0;
+    // 3 - ID Details Requested
+    // 2 - Account Found
+    // 1 - Verifying
+    // 0 - No Account
+
+    //////////////////////////////////////////////////////////////////////////////// Student Account State
+
+
+
+    //////////////////////////////////////////////////////////////////////////////// Navigation
+    FloatingActionButton stu_view_verification_done_link;
+    //////////////////////////////////////////////////////////////////////////////// Navigation
+
+
+    //////////////////////////////////////////////////////////////////////////////// For setting SSID
+    private final String str_initiator = "1911";
+    private final String str_separator = ":";   ////////// Important
+    private String str_uniq_id;
+    private String str_roll_no;
+    //////////////////////////////////////////////////////////////////////////////// For setting SSID
+
+    //////////////////////////////////////////////////////////////////////////////// SharedPref
+    private String sharedPref_displayname;
+    private String sharedPref_email;
+    private String sharedPref_photourl;
+
+    private String displayname_value;
+    private String email_value;
+    private String photourl_value;
+
+    private String tempString;
+    //////////////////////////////////////////////////////////////////////////////// SharedPref
+
+
+
+    ////////////////////////////////////////////////// Menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_student_page, menu);
+        return true;
+    }
+
+    public void onShowQrCode(MenuItem mi)
+    {
+        syncIsDialogCalled = true;
+        showQrCode();
+    }
+    ////////////////////////////////////////////////// Menu
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login_page_main);
+
+        toAgencyFB();
+
+        setRefs();
+
+        ////////////////////////////// Use Student Account State
+        String stuSharedPrefName = getResources().getString(R.string.shared_pref_student_profile_name);
+        String stuSharedPrefAccLevel = getResources().getString(R.string.shared_pref_student_profile_stu_account_level);
+
+        SharedPreferences stuSharedPref = getSharedPreferences(stuSharedPrefName, Context.MODE_PRIVATE);
+        stateAccountDetected = stuSharedPref.getInt(stuSharedPrefAccLevel, 2);
+
+        showStudentView();
+
+        fireHotspot();
+
+        ////////////////////////////// Flare Up Hotspot (First Fire)
+        if(stateAccountDetected == 3)
+        {
+            String shPrefStuUniqId = getResources().getString(R.string.shared_pref_student_profile_stu_unique_id);
+            String shPrefStuRollNo = getResources().getString(R.string.shared_pref_student_profile_stu_class_roll_no);
+
+            str_uniq_id = stuSharedPref.getString(shPrefStuUniqId, "");
+            str_roll_no = stuSharedPref.getString(shPrefStuRollNo, "");
+
+            CreateWifiAccessPoint createAccessPoint = new CreateWifiAccessPoint();
+            createAccessPoint.execute((Void) null);
+        }
+        ////////////////////////////// Flare Up Hotspot (First Fire)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void fireHotspot()
+    {
+        CreateWifiAccessPoint createAccessPoint = new CreateWifiAccessPoint();
+        createAccessPoint.execute((Void) null);
+    }
+
+    private class CreateWifiAccessPoint extends AsyncTask<Void, Void, Boolean>
+    {
+        @Override
+        protected Boolean doInBackground(Void... params)
+        {
+            return setHotspotEnabled(true);
+        }
+    }
+
+    @Override
+    protected void onStop()
+    {
+//        setHotspotEnabled(false);
+        super.onStop();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////// Click Handlers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void showStudentView()
+    {
+        LinearLayout layoutStudentAccountDetails = (LinearLayout) findViewById(R.id.main_page_layout_student_mode_account_details);
+        switch(stateAccountDetected)
+        {
+            case 3:
+                layoutStudentAccountDetails.setVisibility(View.VISIBLE);
+                break;
+
+            default:
+                layoutStudentAccountDetails.setVisibility(View.GONE);
+                break;
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////// Click Handlers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////// Hotspot
+    private boolean setHotspotEnabled(boolean choice)
+    {
+        boolean result;
+
+        WifiManager wifiManager = (WifiManager) getBaseContext().getSystemService(Context.WIFI_SERVICE);
+
+        if(choice)
+        {
+            if(savedWifiState = wifiManager.isWifiEnabled())
+            {
+                wifiManager.setWifiEnabled(false);
+            }
+
+            try
+            {
+                String sharedPrefFileName = getResources().getString(R.string.shared_pref_google_pref);
+                String strPrefDisplayname = getResources().getString(R.string.shared_pref_google_pref_displayname);
+
+                SharedPreferences pref = getSharedPreferences(sharedPrefFileName, Context.MODE_PRIVATE);
+
+                String displayName = pref.getString(strPrefDisplayname, ":Viper GTSR:");
+
+                String firstName = displayName.split(" ")[0];
+                String lastName = displayName.split(" ")[1];
+
+
+                String customSSID = str_initiator + str_separator + str_uniq_id + str_separator + str_roll_no + str_separator + firstName + str_separator + lastName;   ////////// Trial Value
+
+                Method method1 = wifiManager.getClass().getMethod("setWifiApEnabled", WifiConfiguration.class, boolean.class);
+                WifiConfiguration wifiConfig = new WifiConfiguration();
+                wifiConfig.SSID = customSSID;                                                     ////////// Trial Value
+                wifiConfig.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);       ////////// Set Encryption Later
+                wifiConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+                wifiConfig.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+                wifiConfig.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+                wifiConfig.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+                wifiConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+                wifiConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+
+                result = (boolean) method1.invoke(wifiManager, wifiConfig, true);
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+                result = false;
+            }
+
+            return result;
+        }
+        else
+        {
+            try
+            {
+                Method method1 = wifiManager.getClass().getMethod("setWifiApEnabled", WifiConfiguration.class, boolean.class);
+                WifiConfiguration wifiConfig = null;
+                result = (boolean) method1.invoke(wifiManager, wifiConfig, false);
+
+                if(savedWifiState)
+                {
+                    wifiManager.setWifiEnabled(true);
+                }
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+                result = false;
+            }
+
+            return result;
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////// Hotspot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////// Dialog
+    private void showQrCode()
+    {
+        final Dialog dialog = new Dialog(this);
+        dialog.setTitle("QR Code");
+        dialog.setContentView(R.layout.dialog_show_qr_code);
+
+        ImageView qrCodeImg = (ImageView) dialog.findViewById(R.id.image_qr_code);
+        Button close_button = (Button) dialog.findViewById(R.id.ok_button);
+        close_button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                dialog.dismiss();
+            }
+        });
+
+
+        if(!email_value.equals("NULL"))
+        {
+            try
+            {
+                String filePath = Environment.getExternalStorageDirectory() +"/Android/data/" +getApplicationContext().getPackageName() +"/Files"+ File.separator+"customQR.png";
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                Bitmap imageBitmap = BitmapFactory.decodeFile(filePath, options);
+
+                if(imageBitmap != null)
+                {
+                    qrCodeImg.setImageBitmap(imageBitmap);
+                }
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+                Toast.makeText(this, "Please try again...", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else
+        {
+            qrCodeImg.setImageResource(R.drawable.ic_fingerprint_white_48px);
+        }
+
+        dialog.show();
+    }
+    //////////////////////////////////////////////////////////////////////////////// Dialog
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public void onBackPressed()
+    {
+        finish();
+    }
+
+    private void setRefs()
+    {
+        String sharedPrefFileName = getResources().getString(R.string.shared_pref_google_pref);
+        SharedPreferences pref = getSharedPreferences(sharedPrefFileName, Context.MODE_PRIVATE);
+
+        sharedPref_displayname = getResources().getString(R.string.shared_pref_google_pref_displayname);
+        sharedPref_email = getResources().getString(R.string.shared_pref_google_pref_email);
+        sharedPref_photourl = getResources().getString(R.string.shared_pref_google_pref_photourl);
+
+        displayname_value = pref.getString(sharedPref_displayname, "NULL");
+        email_value = pref.getString(sharedPref_email, "NULL");
+        photourl_value = pref.getString(sharedPref_photourl, "NULL");
+
+
+        ////////////////////////////// Share String
+        tempString = "{";
+        tempString += "\"" + sharedPref_displayname + "\":\"" + displayname_value + "\",";
+        tempString += "\"" + sharedPref_email + "\":\"" + email_value + "\",";
+        tempString += "\"" + sharedPref_photourl + "\":\"" + photourl_value + "\"";
+        tempString += "}";
+
+        System.out.println(tempString);
+        ////////////////////////////// Share String
+    }
+
+    public void toAgencyFB()
+    {
+        TextView lbl7 = (TextView) findViewById(R.id.main_page_student_view_lbl_user_details);
+
+        Typeface agencyfb = Typeface.createFromAsset(getAssets(), "agency_fb.ttf");
+        lbl7.setTypeface(agencyfb);
+
+        lbl7 = null;
+    }
+}

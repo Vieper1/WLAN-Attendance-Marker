@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_splasher"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.kvm.automaticattendancemarker.Splasher"
+    android:gravity="center"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+
+
+
+    <FrameLayout
+        android:layout_width="360dp"
+        android:layout_height="560dp"
+        android:background="@drawable/background_for_transparent_activity"
+        android:layout_marginBottom="40dp">
+
+
+
+        <!-- ////////// Centre Icon ////////////////////////////// -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+
+
+            android:paddingBottom="70dp">
+
+
+
+
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_content_paste_white_48dp"
+                android:contentDescription="@string/splash_app_img_sub_content"
+                android:layout_gravity="center"
+                android:scaleX="3.8"
+                android:scaleY="3.8"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_done_white_48dp"
+                android:contentDescription="@string/splash_app_img_sub_content"
+                android:layout_gravity="center"
+                android:paddingTop="40dp"
+                android:paddingLeft="20dp"
+                android:scaleX="1.6"
+                android:scaleY="1.6"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_done_white_48dp"
+                android:contentDescription="@string/splash_app_img_sub_content"
+                android:layout_gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:scaleX="1.6"
+                android:scaleY="1.6"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_done_white_48dp"
+                android:contentDescription="@string/splash_app_img_sub_content"
+                android:layout_gravity="center"
+                android:paddingBottom="20dp"
+                android:paddingLeft="20dp"
+                android:scaleX="1.6"
+                android:scaleY="1.6"/>
+
+        </FrameLayout>
+        <!-- ////////// Centre Icon ////////////////////////////// -->
+
+
+        <!-- 0 -->
+        <TextView
+            android:id="@+id/splasher_lbl_app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/splash_application_name"
+            android:fontFamily="sans-serif"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+
+
+            android:paddingTop="200dp"/>
+
+
+
+
+
+        <!-- No Agency FB for this -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/splash_tm"
+            android:fontFamily="sans-serif-smallcaps"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+
+
+            android:paddingTop="470dp"/>
+
+
+
+
+
+
+
+
+
+
+
+
+    </FrameLayout>
+
+
+
+
+
+
+</LinearLayout>

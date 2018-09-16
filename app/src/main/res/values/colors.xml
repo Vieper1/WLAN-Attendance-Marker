@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="VieperDeepGreen">#002231</color>
+    <color name="VieperDeepLightGreen">#000e15</color>
+    <color name="VieperDeepestGreen">#00070a</color>
+    <color name="VieperLightestGreen">#00868b</color>
+    <color name="VieperLightestGreenPlus">#FF009196</color>
+    <color name="VieperClosestToSteel">#636f76</color>
+
+
+
+    <!--<color name="colorStudentPresent">#8BC34A</color>-->
+    <color name="colorStudentPresent">#636f76</color>
+    <color name="colorStudentAbsent">#F50057</color>
+    <color name="colorTxtStudentUnavailable">#37474f</color>
+    <color name="colorTxtStudentAvailable">#ECEFF1</color>
+
+
+
+</resources>

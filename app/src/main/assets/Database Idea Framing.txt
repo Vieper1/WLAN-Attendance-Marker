@@ -1,0 +1,94 @@
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////// Tables and Definitions //////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+StudentList(id, name, unique_id, roll_no, &class_id, &batch_id)
+0   VN  13  37  0   2
+1   VPL 7   26  1   1
+2   KM  12  36  0   1
+
+
+
+
+ClassMain(id, branch, year, student_count)
+0   IT  3   73  ADBMS
+1   COM 3   70  TRIAL
+
+
+BatchMain(id, batch_name, &class_id, student_count)
+0   B   0   15
+1   C   0   15
+2   B   1   14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ClassAttendance(id, &student_id, subject, &class_id, attended, total)
+0   0   ADBMS   0   5   10
+1   1   TRIAL   1   9   10
+
+
+
+
+PracticalAttendance(id, &student_id, subject, &batch_id, attended, total)
+0   0   ADBMS   1   4   4
+
+
+
+
+
+
+
+
+// Table 0
+    private static final String TABLE_0_COL_0 = "id";
+    private static final String TABLE_0_COL_1 = "name";
+    private static final String TABLE_0_COL_2 = "unique_id";
+    private static final String TABLE_0_COL_3 = "roll_no";
+    private static final String TABLE_0_COL_4 = "_class_id";
+    private static final String TABLE_0_COL_5 = "_batch_id";
+
+
+    // Table 1
+    private static final String TABLE_1_COL_0 = "id";
+    private static final String TABLE_1_COL_1 = "branch";
+    private static final String TABLE_1_COL_2 = "year";
+    private static final String TABLE_1_COL_3 = "student_count";
+
+
+    // Table 2
+    private static final String TABLE_2_COL_0 = "id";
+    private static final String TABLE_2_COL_1 = "batch_name";
+    private static final String TABLE_2_COL_2 = "_class_id";
+    private static final String TABLE_2_COL_3 = "student_count";
+
+
+    // Table 3
+    private static final String TABLE_3_COL_0 = "id";
+    private static final String TABLE_3_COL_1 = "_student_id";
+    private static final String TABLE_3_COL_2 = "subject";
+    private static final String TABLE_3_COL_3 = "_class_id";
+    private static final String TABLE_3_COL_4 = "attended";
+    private static final String TABLE_3_COL_5 = "total";
+
+
+    // Table 4
+    private static final String TABLE_4_COL_0 = "id";
+    private static final String TABLE_4_COL_1 = "_student_id";
+    private static final String TABLE_4_COL_2 = "subject";
+    private static final String TABLE_4_COL_3 = "_batch_id";
+    private static final String TABLE_4_COL_4 = "attended";
+    private static final String TABLE_4_COL_5 = "total";

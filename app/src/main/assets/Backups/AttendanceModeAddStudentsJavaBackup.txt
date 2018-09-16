@@ -1,0 +1,285 @@
+package com.kvm.automaticattendancemarker;
+
+import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.PermissionChecker;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.kvm.automaticattendancemarker.wifimanager.ProfessorScanResult;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.jar.Manifest;
+
+public class AttendanceModeAddStudents extends AppCompatActivity
+{
+    //////////////////////////////////////////////////////////////////////////////// Categories
+    private static final String EXTRA_SYSTEM_TYPE = "system_type";
+    private static final String EXTRA_SYSTEM_TYPE1_2 = "ext_type";
+
+    private static final String EXTRA_CLASS_ID = "class_id";
+    private static final String EXTRA_SUBJECT_ID = "subject_id";
+    //////////////////////////////////////////////////////////////////////////////// Categories
+
+    private String MenuType;
+
+    private String classId;
+    private String subjectId;
+
+    private Cursor subjectCursor;
+
+    private static Uri uri;
+
+    ListView scanResultListView;
+
+    //////////////////////////////////////// Temp
+    private WifiReceiver wifiReceiver;
+    private ArrayList<String> connections;
+
+    private final long scanFrequency = 1000;
+    //////////////////////////////////////// Temp
+
+
+    //////////////////////////////////////// New Alternate
+    private WifiManager wifiManager;
+    private static int prevWifiState;
+    private ArrayAdapter scanResultAdapter2;
+
+    private String ITEM_KEY = "key";
+
+    private int scanSize = 0;
+    private List<ScanResult> scanResult;
+    //////////////////////////////////////// New Alternate
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_attendance_mode_add_students);
+
+        MenuType = getIntent().getStringExtra(EXTRA_SYSTEM_TYPE);
+        classId = getIntent().getStringExtra(EXTRA_CLASS_ID);
+        subjectId = getIntent().getStringExtra(EXTRA_SUBJECT_ID);
+
+        toAgencyFB();
+
+        uri = Uri.parse(getResources().getString(R.string.studbase_content_provider_uri));
+
+        ////////////////////////////// Set Listeners
+        FloatingActionButton fab_add = (FloatingActionButton) findViewById(R.id.professor_attendance_mode_add_students_fab_add);
+        fab_add.setOnClickListener(onFABClickListener);
+        FloatingActionButton fab_refresh = (FloatingActionButton) findViewById(R.id.professor_attendance_mode_add_students_fab_refresh);
+        fab_refresh.setOnClickListener(onFABClickListener);
+        ////////////////////////////// Set Listeners
+
+
+
+
+        connections = new ArrayList<>();
+
+
+
+        scanResultListView = (ListView) findViewById(R.id.professor_attendance_mode_add_students_available_ids);
+
+
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            quickAlertMessage("Update Permissions", "The app needs Coarse Location Update Permission\nGrant it to avail this feature");
+            ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1080);
+        }
+
+
+        ////////////////////////////// WifiEnabler
+        wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        prevWifiState = wifiManager.getWifiState();
+        if(!wifiManager.isWifiEnabled())
+        {
+            Toast.makeText(AttendanceModeAddStudents.this, "Wifi not enabled! Enabling...", Toast.LENGTH_SHORT).show();
+            wifiManager.setWifiEnabled(true);
+        }
+        ////////////////////////////// WifiEnabler
+        scanNow();
+
+        scanResultAdapter2 = new ArrayAdapter<>(AttendanceModeAddStudents.this, android.R.layout.simple_list_item_1, connections);
+        scanResultListView.setAdapter(scanResultAdapter2);
+    }
+
+
+
+
+    public void scanNow()
+    {
+        new Handler().postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+                wifiReceiver = new WifiReceiver();
+
+                registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+                wifiManager.startScan();
+
+                scanNow();
+            }
+        }, scanFrequency);
+    }
+
+
+
+
+
+    private class WifiReceiver extends BroadcastReceiver
+    {
+
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            connections.clear();
+            List<ScanResult> wifiList;
+
+            wifiList = wifiManager.getScanResults();
+            for(int i=0 ; i<wifiList.size() ; i++)
+            {
+                connections.add(wifiList.get(i).SSID);
+            }
+            scanResultAdapter2.notifyDataSetChanged();
+            scanResultListView.setAdapter(scanResultAdapter2);
+        }
+    }
+
+    @Override
+    protected void onPause()
+    {
+        unregisterReceiver(wifiReceiver);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        super.onResume();
+    }
+
+
+
+
+
+
+
+    private View.OnClickListener onFABClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            if(v.getId() == R.id.professor_attendance_mode_add_students_fab_add)
+            {
+                quickToaster("\"Add Student\" feature not added yet");
+            }
+
+            if(v.getId() == R.id.professor_attendance_mode_add_students_fab_refresh)
+            {
+                quickToaster("Does Nothing...");
+            }
+        }
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    protected void onStop()
+    {
+        if(prevWifiState != WifiManager.WIFI_STATE_ENABLED && prevWifiState != WifiManager.WIFI_STATE_ENABLING)
+        {
+            wifiManager.setWifiEnabled(false);
+        }
+        super.onStop();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent backToMenu = new Intent(AttendanceModeAddStudents.this, AttendanceModeProfessor.class);
+        backToMenu.putExtra(EXTRA_SYSTEM_TYPE, MenuType);
+        backToMenu.putExtra(EXTRA_SUBJECT_ID, subjectId);
+        backToMenu.putExtra(EXTRA_CLASS_ID, classId);
+        startActivity(backToMenu);
+    }
+
+    private void toAgencyFB()
+    {
+        TextView lbl1 = (TextView) findViewById(R.id.professor_attendance_mode_add_students_header);
+        TextView lbl2 = (TextView) findViewById(R.id.professor_attendance_mode_add_students_alert);
+
+
+
+        Typeface agencyfb = Typeface.createFromAsset(getAssets(), "agency_fb.ttf");
+        lbl1.setTypeface(agencyfb);
+        lbl2.setTypeface(agencyfb);
+    }
+
+    //////////////////////////////////////////////////////////////////////////////// Can Be Used
+    private void quickToaster(String message)
+    {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void quickAlertMessage(String title, String message)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    //////////////////////////////////////////////////////////////////////////////// Can Be Used
+}

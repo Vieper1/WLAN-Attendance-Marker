@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "413273695767",
+    "project_id": "firebase-viperaam"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413273695767:android:da98cc44bb46e4c4",
+        "android_client_info": {
+          "package_name": "com.kvm.automaticattendancemarker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "413273695767-fdtp6ipbcdhhlpo5pg220hl0b4gkhev0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kvm.automaticattendancemarker",
+            "certificate_hash": "D9110E72D187EEC7F7AD1862A68604FC56677EEE"
+          }
+        },
+        {
+          "client_id": "413273695767-1qp9nunjnvfg2qks1g8tprtk8nnj9jae.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdSUjZWbnG4F3yIJuDLVfA-F3c3rrEskc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
