@@ -1,6 +1,10 @@
 # AutomaticAttendanceMarker
 Android Open Source application to poll attendance in classes/lecture halls using WLAN
 
+### Go through this presentation file for a cool overview
+https://github.com/Vieper1/WLAN-Attendance-Marker/blob/master/WLAN.pdf
+
+
 # How to run project
 1. Download zip
 2. Extract to convenient location
