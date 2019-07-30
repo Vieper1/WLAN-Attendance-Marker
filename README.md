@@ -9,7 +9,19 @@ https://ieeexplore.ieee.org/document/8474885
 ### Go through this presentation file for a cool overview
 https://github.com/Vieper1/WLAN-Attendance-Marker/blob/master/WLAN.pdf
 
-<br/>
+
+### Screenshot taken after the attendance session<br/>
+a. The Darkest circles show roll numbers not registered<br/>
+b. The Non-Filled circles show registered numbers that are absent during the session<br/>
+c. The White-Filled circles show numbers that were present in the session<br/>
+![Image Showing Attendance Stats](https://github.com/Vieper1/WLAN-Attendance-Marker/blob/master/Screenshots/WLAN%20Screenshot%201.png)
+
+### Screenshot of the student data page<br/>
+![Image Attendance Polling Page Showing Active Attendance](https://github.com/Vieper1/WLAN-Attendance-Marker/blob/master/Screenshots/WLAN%20Screenshot%202.png)
+
+### Screenshot (cropped) of the unique QR code generated for the student
+![Image Attendance Polling Page Showing Active Attendance](https://github.com/Vieper1/WLAN-Attendance-Marker/blob/master/Screenshots/WLAN%20Screenshot%203.png)
+
 
 # How to run project
 1. Download zip
